@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>职业词库（商务版）｜HSK 4–5</title>
+  <style>
+    :root {
+      --navy:#173a67; --blue:#315f8f; --yellow:#f7d978;
+      --ink:#233446; --muted:#697b8d; --line:#d9e2ea;
+      --paper:#ffffff; --soft:#f6f9fb; --shadow:0 10px 30px rgba(23,58,103,.08);
+    }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
+      margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",
+      "Hiragino Sans GB","Microsoft YaHei",Arial,sans-serif;
+      color:var(--ink); background:linear-gradient(#fff8dc 0, #f7fafc 280px, #f7fafc 100%);
+    }
+    .wrap { width:min(980px, calc(100% - 28px)); margin:0 auto; }
+    header { padding:38px 0 24px; }
+    .eyebrow { color:var(--blue); font-weight:700; font-size:14px; letter-spacing:.04em; }
+    h1 { margin:6px 0 8px; color:var(--navy); font-size:clamp(28px,5vw,46px); line-height:1.1; }
+    .sub { color:var(--muted); font-size:15px; line-height:1.7; max-width:760px; }
+    .actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:18px; }
+    .btn {
+      display:inline-flex; align-items:center; justify-content:center; min-height:44px;
+      padding:10px 16px; border-radius:999px; text-decoration:none; font-weight:700;
+      border:1px solid var(--line); background:#fff; color:var(--navy);
+    }
+    .btn.primary { background:var(--navy); color:#fff; border-color:var(--navy); }
+    .toolbar {
+      position:sticky; top:0; z-index:10; padding:10px 0;
+      background:rgba(247,250,252,.92); backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(217,226,234,.8);
+    }
+    .toolbar-inner { display:flex; gap:10px; align-items:center; overflow:auto; padding-bottom:2px; }
+    .search {
+      flex:1 0 220px; min-width:180px; height:44px; border:1px solid var(--line);
+      border-radius:12px; padding:0 14px; font-size:16px; outline:none; background:#fff;
+    }
+    .chip {
+      flex:0 0 auto; border:1px solid var(--line); background:#fff; color:var(--navy);
+      padding:10px 13px; border-radius:999px; font-weight:700; cursor:pointer;
+    }
+    .chip.active { background:var(--yellow); border-color:#e3c75e; }
+    main { padding:28px 0 60px; }
+    section { margin:0 0 34px; scroll-margin-top:76px; }
+    .section-title {
+      display:flex; align-items:center; gap:10px; margin-bottom:14px;
+      color:var(--navy); font-size:22px; font-weight:800;
+    }
+    .section-title::before { content:""; width:8px; height:28px; border-radius:8px; background:var(--yellow); }
+    .grid {
+      display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:12px;
+    }
+    .vocab-card {
+      background:var(--paper); border:1px solid var(--line); border-radius:16px;
+      padding:16px; box-shadow:var(--shadow); min-height:128px;
+    }
+    .hanzi { color:var(--navy); font-size:22px; font-weight:800; line-height:1.35; }
+    .pinyin { margin-top:8px; color:#344d66; font-size:15px; line-height:1.45; }
+    .english { margin-top:7px; color:var(--muted); font-size:14px; line-height:1.45; }
+    .frames {
+      display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:12px;
+    }
+    .frame {
+      background:#fffdf4; border:1px solid #e5d990; border-radius:16px; padding:18px;
+      box-shadow:var(--shadow);
+    }
+    .frame .zh { color:var(--navy); font-size:20px; font-weight:800; }
+    .frame .py { color:#52687d; margin-top:8px; font-size:14px; line-height:1.5; }
+    .example {
+      margin-top:18px; padding:18px; border-radius:16px; background:#eef4f9; border:1px solid #d8e4ee;
+    }
+    .example strong { color:var(--navy); }
+    .hint {
+      margin:18px 0 0; padding:14px 16px; background:#fff; border:1px solid var(--line);
+      border-left:5px solid var(--yellow); border-radius:12px; color:#496176; line-height:1.7;
+    }
+    .empty { display:none; color:var(--muted); padding:20px 0; }
+    footer { color:var(--muted); font-size:13px; padding:0 0 40px; line-height:1.6; }
+    @media (max-width:760px) {
+      header { padding-top:28px; }
+      .grid, .frames { grid-template-columns:1fr; }
+      .vocab-card { min-height:auto; }
+      .toolbar-inner { align-items:stretch; }
+      .section-title { font-size:20px; }
+    }
+    @media print {
+      .toolbar,.actions { display:none!important; }
+      body { background:#fff; }
+      .vocab-card,.frame { box-shadow:none; break-inside:avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="eyebrow">HSK 4–5 · 中文简历 / 实习经历</div>
+      <h1>职业词库（商务版）</h1>
+      <div class="sub">选择你感兴趣的公司、职位和工作内容，设计一段自己的实习经历。汉字、拼音和英文释义可以一起查看。</div>
+      <div class="actions">
+        <a class="btn primary" href="#positions">开始查看词库</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <div class="wrap toolbar-inner">
+      <input id="search" class="search" type="search" placeholder="搜索汉字 / 拼音 / English">
+      <button class="chip active" data-filter="all">全部</button>
+      <button class="chip" data-filter="position">职位</button>
+      <button class="chip" data-filter="company">公司</button>
+      <button class="chip" data-filter="duty">工作内容</button>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <section id="positions" data-section="position">
+      <div class="section-title">一、商务类职业 Business Positions</div>
+      <div class="grid">
+        <article class="vocab-card" data-kind="position" data-search="实习生 shíxíshēng intern">
+          <div class="hanzi">实习生</div>
+          <div class="pinyin">shíxíshēng</div>
+          <div class="english">intern</div>
+        </article>
+
+        <article class="vocab-card" data-kind="position" data-search="商务助理 shāngwù zhùlǐ business assistant">
+          <div class="hanzi">商务助理</div>
+          <div class="pinyin">shāngwù zhùlǐ</div>
+          <div class="english">business assistant</div>
+        </article>
+
+        <article class="vocab-card" data-kind="position" data-search="行政助理 xíngzhèng zhùlǐ administrative assistant">
+          <div class="hanzi">行政助理</div>
+          <div class="pinyin">xíngzhèng zhùlǐ</div>
+          <div class="english">administrative assistant</div>
+        </article>
+
+        <article class="vocab-card" data-kind="position" data-search="部门经理 bùmén jīnglǐ department manager">
+          <div class="hanzi">部门经理</div>
+          <div class="pinyin">bùmén jīnglǐ</div>
+          <div class="english">department manager</div>
+        </article>
+
+        <article class="vocab-card" data-kind="position" data-search="项目经理 xiàngmù jīnglǐ project manager">
+          <div class="hanzi">项目经理</div>
+          <div class="pinyin">xiàngmù jīnglǐ</div>
+          <div class="english">project manager</div>
+        </article>
+
+        <article class="vocab-card" data-kind="position" data-search="产品经理 chǎnpǐn jīnglǐ product manager">
+          <div class="hanzi">产品经理</div>
+          <div class="pinyin">chǎnpǐn jīnglǐ</div>
+          <div class="english">product manager</div>
+        </article>
+
+        <article class="vocab-card" data-kind="position" data-search="市场专员 shìchǎng zhuānyuán marketing specialist">
+          <div class="hanzi">市场专员</div>
+          <div class="pinyin">shìchǎng zhuānyuán</div>
+          <div class="english">marketing specialist</div>
+        </article>
+
+        <article class="vocab-card" data-kind="position" data-search="销售经理 xiāoshòu jīnglǐ sales manager">
+          <div class="hanzi">销售经理</div>
+          <div class="pinyin">xiāoshòu jīnglǐ</div>
+          <div class="english">sales manager</div>
+        </article>
+
+        <article class="vocab-card" data-kind="position" data-search="客户经理 kèhù jīnglǐ account / client manager">
+          <div class="hanzi">客户经理</div>
+          <div class="pinyin">kèhù jīnglǐ</div>
+          <div class="english">account / client manager</div>
+        </article>
+
+        <article class="vocab-card" data-kind="position" data-search="外贸业务员 wàimào yèwùyuán international trade salesperson">
+          <div class="hanzi">外贸业务员</div>
+          <div class="pinyin">wàimào yèwùyuán</div>
+          <div class="english">international trade salesperson</div>
+        </article>
+
+        <article class="vocab-card" data-kind="position" data-search="采购员 cǎigòuyuán purchasing specialist / buyer">
+          <div class="hanzi">采购员</div>
+          <div class="pinyin">cǎigòuyuán</div>
+          <div class="english">purchasing specialist / buyer</div>
+        </article>
+
+        <article class="vocab-card" data-kind="position" data-search="人力资源专员 rénlì zīyuán zhuānyuán hr specialist">
+          <div class="hanzi">人力资源专员</div>
+          <div class="pinyin">rénlì zīyuán zhuānyuán</div>
+          <div class="english">HR specialist</div>
+        </article>
+
+        <article class="vocab-card" data-kind="position" data-search="财务助理 cáiwù zhùlǐ finance assistant">
+          <div class="hanzi">财务助理</div>
+          <div class="pinyin">cáiwù zhùlǐ</div>
+          <div class="english">finance assistant</div>
+        </article>
+
+        <article class="vocab-card" data-kind="position" data-search="会计 kuàijì accountant">
+          <div class="hanzi">会计</div>
+          <div class="pinyin">kuàijì</div>
+          <div class="english">accountant</div>
+        </article>
+
+        <article class="vocab-card" data-kind="position" data-search="运营专员 yùnyíng zhuānyuán operations specialist">
+          <div class="hanzi">运营专员</div>
+          <div class="pinyin">yùnyíng zhuānyuán</div>
+          <div class="english">operations specialist</div>
+        </article>
+
+        <article class="vocab-card" data-kind="position" data-search="数据分析师 shùjù fēnxīshī data analyst">
+          <div class="hanzi">数据分析师</div>
+          <div class="pinyin">shùjù fēnxīshī</div>
+          <div class="english">data analyst</div>
+        </article>
+
+        <article class="vocab-card" data-kind="position" data-search="翻译 fānyì translator">
+          <div class="hanzi">翻译</div>
+          <div class="pinyin">fānyì</div>
+          <div class="english">translator</div>
+        </article></div>
+    </section>
+
+    <section id="companies" data-section="company">
+      <div class="section-title">二、公司 / 单位 Company Types</div>
+      <div class="grid">
+        <article class="vocab-card" data-kind="company" data-search="贸易公司 màoyì gōngsī trading company">
+          <div class="hanzi">贸易公司</div>
+          <div class="pinyin">màoyì gōngsī</div>
+          <div class="english">trading company</div>
+        </article>
+
+        <article class="vocab-card" data-kind="company" data-search="科技公司 kējì gōngsī technology company">
+          <div class="hanzi">科技公司</div>
+          <div class="pinyin">kējì gōngsī</div>
+          <div class="english">technology company</div>
+        </article>
+
+        <article class="vocab-card" data-kind="company" data-search="咨询公司 zīxún gōngsī consulting company">
+          <div class="hanzi">咨询公司</div>
+          <div class="pinyin">zīxún gōngsī</div>
+          <div class="english">consulting company</div>
+        </article>
+
+        <article class="vocab-card" data-kind="company" data-search="广告公司 guǎnggào gōngsī advertising agency">
+          <div class="hanzi">广告公司</div>
+          <div class="pinyin">guǎnggào gōngsī</div>
+          <div class="english">advertising agency</div>
+        </article>
+
+        <article class="vocab-card" data-kind="company" data-search="互联网公司 hùliánwǎng gōngsī internet company">
+          <div class="hanzi">互联网公司</div>
+          <div class="pinyin">hùliánwǎng gōngsī</div>
+          <div class="english">internet company</div>
+        </article>
+
+        <article class="vocab-card" data-kind="company" data-search="汽车公司 qìchē gōngsī automotive company">
+          <div class="hanzi">汽车公司</div>
+          <div class="pinyin">qìchē gōngsī</div>
+          <div class="english">automotive company</div>
+        </article>
+
+        <article class="vocab-card" data-kind="company" data-search="保险公司 bǎoxiǎn gōngsī insurance company">
+          <div class="hanzi">保险公司</div>
+          <div class="pinyin">bǎoxiǎn gōngsī</div>
+          <div class="english">insurance company</div>
+        </article>
+
+        <article class="vocab-card" data-kind="company" data-search="银行 yínháng bank">
+          <div class="hanzi">银行</div>
+          <div class="pinyin">yínháng</div>
+          <div class="english">bank</div>
+        </article></div>
+    </section>
+
+    <section id="duties" data-section="duty">
+      <div class="section-title">三、工作内容 Job Duties</div>
+      <div class="grid">
+        <article class="vocab-card" data-kind="duty" data-search="负责市场调查 fùzé shìchǎng diàochá be responsible for market research">
+          <div class="hanzi">负责市场调查</div>
+          <div class="pinyin">fùzé shìchǎng diàochá</div>
+          <div class="english">be responsible for market research</div>
+        </article>
+
+        <article class="vocab-card" data-kind="duty" data-search="负责客户沟通 fùzé kèhù gōutōng communicate with clients">
+          <div class="hanzi">负责客户沟通</div>
+          <div class="pinyin">fùzé kèhù gōutōng</div>
+          <div class="english">communicate with clients</div>
+        </article>
+
+        <article class="vocab-card" data-kind="duty" data-search="介绍产品 jièshào chǎnpǐn introduce products">
+          <div class="hanzi">介绍产品</div>
+          <div class="pinyin">jièshào chǎnpǐn</div>
+          <div class="english">introduce products</div>
+        </article>
+
+        <article class="vocab-card" data-kind="duty" data-search="处理订单 chǔlǐ dìngdān process orders">
+          <div class="hanzi">处理订单</div>
+          <div class="pinyin">chǔlǐ dìngdān</div>
+          <div class="english">process orders</div>
+        </article>
+
+        <article class="vocab-card" data-kind="duty" data-search="联系客户 liánxì kèhù contact clients">
+          <div class="hanzi">联系客户</div>
+          <div class="pinyin">liánxì kèhù</div>
+          <div class="english">contact clients</div>
+        </article>
+
+        <article class="vocab-card" data-kind="duty" data-search="制作表格和报告 zhìzuò biǎogé hé bàogào prepare spreadsheets and reports">
+          <div class="hanzi">制作表格和报告</div>
+          <div class="pinyin">zhìzuò biǎogé hé bàogào</div>
+          <div class="english">prepare spreadsheets and reports</div>
+        </article>
+
+        <article class="vocab-card" data-kind="duty" data-search="协助经理整理资料 xiézhù jīnglǐ zhěnglǐ zīliào help the manager organize materials">
+          <div class="hanzi">协助经理整理资料</div>
+          <div class="pinyin">xiézhù jīnglǐ zhěnglǐ zīliào</div>
+          <div class="english">help the manager organize materials</div>
+        </article>
+
+        <article class="vocab-card" data-kind="duty" data-search="协助策划活动 xiézhù cèhuà huódòng assist with event planning">
+          <div class="hanzi">协助策划活动</div>
+          <div class="pinyin">xiézhù cèhuà huódòng</div>
+          <div class="english">assist with event planning</div>
+        </article>
+
+        <article class="vocab-card" data-kind="duty" data-search="参加公司会议 cānjiā gōngsī huìyì attend company meetings">
+          <div class="hanzi">参加公司会议</div>
+          <div class="pinyin">cānjiā gōngsī huìyì</div>
+          <div class="english">attend company meetings</div>
+        </article>
+
+        <article class="vocab-card" data-kind="duty" data-search="分析销售数据 fēnxī xiāoshòu shùjù analyze sales data">
+          <div class="hanzi">分析销售数据</div>
+          <div class="pinyin">fēnxī xiāoshòu shùjù</div>
+          <div class="english">analyze sales data</div>
+        </article>
+
+        <article class="vocab-card" data-kind="duty" data-search="翻译商务文件 fānyì shāngwù wénjiàn translate business documents">
+          <div class="hanzi">翻译商务文件</div>
+          <div class="pinyin">fānyì shāngwù wénjiàn</div>
+          <div class="english">translate business documents</div>
+        </article>
+
+        <article class="vocab-card" data-kind="duty" data-search="负责中国市场的业务 fùzé zhōngguó shìchǎng de yèwù be responsible for business in the chinese market">
+          <div class="hanzi">负责中国市场的业务</div>
+          <div class="pinyin">fùzé Zhōngguó shìchǎng de yèwù</div>
+          <div class="english">be responsible for business in the Chinese market</div>
+        </article></div>
+    </section>
+
+    <section id="frames">
+      <div class="section-title">四、简历句型 Résumé Sentence Frames</div>
+      <div class="frames">
+        <div class="frame">
+          <div class="zh">我在 ______ 实习。</div>
+          <div class="py">Wǒ zài ______ shíxí.<br>I interned at ______.</div>
+        </div>
+        <div class="frame">
+          <div class="zh">我的职务是 ______。</div>
+          <div class="py">Wǒ de zhíwù shì ______.<br>My position was ______.</div>
+        </div>
+        <div class="frame">
+          <div class="zh">我主要负责 ______。</div>
+          <div class="py">Wǒ zhǔyào fùzé ______.<br>I was mainly responsible for ______.</div>
+        </div>
+      </div>
+
+      <div class="example">
+        <strong>例 Example</strong><br><br>
+        我在一家贸易公司实习。<br>
+        我的职务是市场专员。<br>
+        我主要负责市场调查和客户沟通。
+      </div>
+
+      <div class="hint">
+        课堂任务：先选择一个你感兴趣的职位，再选择合适的公司和工作内容，填写自己的中文简历。
+      </div>
+    </section>
+
+    <div id="empty" class="empty">没有找到匹配的词语。</div>
+  </main>
+
+  <footer class="wrap">
+    Career Vocabulary for Résumé & Internship Tasks · HSK 4–5
+  </footer>
+
+  <script>
+    const search = document.getElementById('search');
+    const chips = [...document.querySelectorAll('.chip')];
+    const cards = [...document.querySelectorAll('.vocab-card')];
+    const sections = [...document.querySelectorAll('section[data-section]')];
+    const empty = document.getElementById('empty');
+    let active = 'all';
+
+    function applyFilter() {
+      const q = search.value.trim().toLowerCase();
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const kindOK = active === 'all' || card.dataset.kind === active;
+        const textOK = !q || card.dataset.search.includes(q);
+        const show = kindOK && textOK;
+        card.style.display = show ? '' : 'none';
+        if (show) visibleCount++;
+      });
+
+      sections.forEach(section => {
+        const visible = [...section.querySelectorAll('.vocab-card')].some(c => c.style.display !== 'none');
+        section.style.display = visible ? '' : 'none';
+      });
+
+      empty.style.display = visibleCount ? 'none' : 'block';
+    }
+
+    search.addEventListener('input', applyFilter);
+    chips.forEach(chip => chip.addEventListener('click', () => {
+      chips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      active = chip.dataset.filter;
+      applyFilter();
+    }));
+  </script>
+</body>
+</html>
